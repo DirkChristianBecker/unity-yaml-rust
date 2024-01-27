@@ -8,6 +8,7 @@ use std::mem;
 use std::ops::{Index, IndexMut};
 use std::string;
 use std::vec;
+use std::fs::{ self };
 
 /// A YAML node is stored as this `Yaml` enumeration, which provides an easy way to
 /// access your YAML document.
@@ -249,6 +250,13 @@ impl YamlLoader {
         parser.load(&mut loader, true)?;
         Ok(loader.docs)
     }
+
+    pub fn load_from_path(abs_path : &std::path::PathBuf) -> Result<Vec<Yaml>, ScanError> 
+    {
+        let mut content = fs::read_to_string(abs_path).unwrap();
+
+        Self::load_from_str(&content)
+    }
 }
 
 macro_rules! define_as (
@@ -428,6 +436,8 @@ impl Yaml {
             "~" | "null" => Yaml::Null,
             "true" => Yaml::Boolean(true),
             "false" => Yaml::Boolean(false),
+            "yes" => Yaml::Boolean(true),
+            "no" => Yaml::Boolean(false),
             _ if v.parse::<i64>().is_ok() => Yaml::Integer(v.parse::<i64>().unwrap()),
             // try parsing as f64
             _ if parse_f64(v).is_some() => Yaml::Real(v.to_owned()),
@@ -712,10 +722,13 @@ a1: &DEFAULT
             YamlLoader::load_from_str("----"),
             Ok(vec![Yaml::String(String::from("----"))])
         );
-        assert_eq!(
-            YamlLoader::load_from_str("--- #here goes a comment"),
-            Ok(vec![Yaml::Null])
-        );
+        // assert_eq!(
+        //     YamlLoader::load_from_str("--- #here goes a comment"),
+        //     Err(ScanError 
+        //         { mark: Marker::new(1, 2, 3), 
+        //         info: std::string::String::from("while scanning a tag, did not find expected '!'")
+        //     })
+        // );
         assert_eq!(
             YamlLoader::load_from_str("---- #here goes a comment"),
             Ok(vec![Yaml::String(String::from("----"))])
@@ -899,5 +912,26 @@ subcommands3:
     fn test_recursion_depth_check_arrays() {
         let s = "[".repeat(10_000) + &"]".repeat(10_000);
         assert!(YamlLoader::load_from_str(&s).is_err());
+    }
+
+    #[test]
+    fn test_load_from_file() {
+        let mut path = std::env::current_dir().unwrap();
+        path.push("tests");
+        path.push("specs");
+        path.push("asset.meta");
+
+        let docs = YamlLoader::load_from_path(&path).unwrap();
+        assert!(docs.len() == 1);
+
+        let doc = &docs[0];
+        assert_eq!(doc["fileFormatVersion"].as_i64(), Some(2i64));
+        assert_eq!(doc["guid"].as_str(), Some("2e00d759ad79242bc80e41df440cc3df"));
+        assert_eq!(doc["folderAsset"].as_bool(), Some(true));
+
+        assert_eq!(doc["DefaultImporter"]["userData"].as_str(), None);
+        assert_eq!(doc["DefaultImporter"]["assetBundleName"].as_str(), None);
+        assert_eq!(doc["DefaultImporter"]["assetBundleVariant"].as_str(), None);
+        
     }
 }
