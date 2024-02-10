@@ -35,13 +35,16 @@ GameObject:
     m_IsActive: 1
 "#;
     let f = AssetFile::from_str(s);
-    f.print();
+
+    // Access a file via file id.
+    // The file id can be found after the &-Symbol in the document start tag: 
+    // --- !u!1001 &100100000
     let doc1 = f.get_document(100100000);
 
     assert_eq!(doc1.get_asset_type(), AssetType::PrefabInstance);
-    assert_eq!(doc1.get_i64("m_ObjectHideFlags"), 1);
-    assert_eq!(doc1.get_i64("serializedVersion"), 2);
+    assert_eq!(doc1.get_i64("Prefab/m_ObjectHideFlags"), 1);
+    assert_eq!(doc1.get_i64("Prefab/serializedVersion"), 2);
 
     let doc2 = f.get_document(1167328666661238);
-    assert_eq!(doc2.get_f64("m_StaticEditorFlags"), 0.1);
+    assert_eq!(doc2.get_f64("GameObject/m_StaticEditorFlags"), 0.1);
 }
