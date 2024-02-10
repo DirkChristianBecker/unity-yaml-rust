@@ -243,7 +243,7 @@ impl<T: Iterator<Item = char>> Parser<T> {
                 recv.on_event(first_ev, mark);
                 self.load_sequence(recv)
             }
-            Event::MappingStart(_,_) => {
+            Event::MappingStart(_, _) => {
                 recv.on_event(first_ev, mark);
                 self.load_mapping(recv)
             }
@@ -350,7 +350,7 @@ impl<T: Iterator<Item = char>> Parser<T> {
                 self.skip();
                 Ok((Event::StreamEnd, mark))
             }
-            Token(_, TokenType::VersionDirective(..)) 
+            Token(_, TokenType::VersionDirective(..))
             | Token(_, TokenType::TagDirective(..))
             | Token(_, TokenType::DocumentStart(..)) => {
                 // explicit document
@@ -360,7 +360,7 @@ impl<T: Iterator<Item = char>> Parser<T> {
                 self.parser_process_directives()?;
                 self.push_state(State::DocumentEnd);
                 self.state = State::BlockNode;
-                Ok((Event::DocumentStart(0,0), mark))
+                Ok((Event::DocumentStart(0, 0), mark))
             }
             _ => {
                 // explicit document

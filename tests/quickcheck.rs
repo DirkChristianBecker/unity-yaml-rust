@@ -1,4 +1,3 @@
-
 use quickcheck::quickcheck;
 use quickcheck::TestResult;
 use unity_yaml_rust::{Yaml, YamlEmitter, YamlLoader};

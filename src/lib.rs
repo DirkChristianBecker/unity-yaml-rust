@@ -40,23 +40,24 @@
     allow(match_same_arms, should_implement_trait)
 )]
 
-
+pub mod asset_file;
+pub mod asset_types;
 pub mod emitter;
 pub mod parser;
 pub mod scanner;
-pub mod yaml;
 pub mod tools;
 pub mod unity_document;
-pub mod asset_types;
+pub mod yaml;
 
 // reexport key APIs
+pub use crate::asset_file::AssetFile;
+pub use crate::asset_types::AssetType;
 pub use crate::emitter::{EmitError, YamlEmitter};
 pub use crate::parser::Event;
 pub use crate::scanner::ScanError;
-pub use crate::yaml::{Yaml, YamlLoader};
 pub use crate::tools::dump_node;
 pub use crate::unity_document::UnityDocument;
-pub use crate::asset_types::AssetType;
+pub use crate::yaml::{Yaml, YamlLoader};
 
 #[cfg(test)]
 mod tests {
@@ -118,5 +119,4 @@ key1:a2
         assert!(YamlLoader::load_from_str(s).is_err());
         assert!(try_fail(s).is_err());
     }
-
 }

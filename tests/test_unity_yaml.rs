@@ -1,4 +1,6 @@
-use unity_yaml_rust::YamlLoader;
+use unity_yaml_rust::AssetFile;
+use unity_yaml_rust::AssetType;
+use unity_yaml_rust::dump_node;
 
 #[test]
 fn test_unity_yaml() {
@@ -50,6 +52,16 @@ SpriteAtlas:
   m_IsVariant: 0
 "#;
 
-    let doc = YamlLoader::load_from_str(unity_yaml).unwrap();
+    let f = AssetFile::from_str(unity_yaml);
+    f.print();
+    let doc1 = f.get_document(4343727234628468602);
 
+    assert_eq!(doc1.get_asset_type(), AssetType::SpriteAtlas);
+    assert_eq!(doc1.get_i64("SpriteAtlas/m_ObjectHideFlags"), 0);
+    assert_eq!(doc1.get_string("SpriteAtlas/m_Name"), "atlas_launch");
+
+    assert_eq!(doc1.get_i64("SpriteAtlas/m_EditorData/serializedVersion"), 2);
+
+    let array = doc1.get_node("SpriteAtlas/m_PackedSprites").expect("Should always exist").as_vec().expect("Should be an array.");
+    dump_node(&array[0], 0);
 }

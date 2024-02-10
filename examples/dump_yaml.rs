@@ -1,8 +1,7 @@
-use unity_yaml_rust::{yaml, YamlEmitter, Yaml};
 use unity_yaml_rust::tools::dump_node;
+use unity_yaml_rust::{yaml, Yaml};
 
-fn main() 
-{
+fn main() {
     let s = r#"
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
@@ -53,38 +52,29 @@ SpriteAtlas:
 
     let mut docs = yaml::YamlLoader::load_from_str(s).unwrap();
     // Multi document support, doc is a yaml::Yaml
-    let mut i = 0;
-    for doc in docs.iter_mut() 
-    {
-        i += 1;
+    for doc in docs.iter_mut() {
 
         // Debug support
         // println!("{:?}", doc);
 
         dump_node(doc, 0);
 
-        match doc 
-        {
-            Yaml::DocumentMeta(doc_type, doc_id) => 
-            {
+        match doc {
+            Yaml::DocumentMeta(doc_type, doc_id) => {
                 assert_eq!(doc_id.to_owned(), 4343727234628468602 as u64);
                 assert_eq!(doc_type.to_owned(), 687078895 as u64);
             }
-            _=>
-            {
-
-            }
+            _ => {}
         }
 
-        if !matches!(doc, Yaml::Original(_)) && !matches!(doc, Yaml::DocumentMeta(_, _)) 
-        {
+        if !matches!(doc, Yaml::Original(_)) && !matches!(doc, Yaml::DocumentMeta(_, _)) {
             //IndexMut
             let sprite_atlas = &mut doc["SpriteAtlas"];
-            
+
             assert_eq!(sprite_atlas["m_ObjectHideFlags"].as_i64(), Some(0i64));
             assert!(sprite_atlas["m_ObjectHideFlags"].replace_i64(3));
             assert_eq!(sprite_atlas["m_ObjectHideFlags"].as_i64(), Some(3i64));
-            
+
             sprite_atlas["m_Name"].replace_string("launch".to_string());
             assert_eq!(sprite_atlas["m_Name"].as_str(), Some("launch"));
 

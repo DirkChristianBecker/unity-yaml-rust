@@ -1,0 +1,214 @@
+{
+    // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+    // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+    // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'unity-yaml-rust'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=unity-yaml-rust"
+                ],
+                "filter": {
+                    "name": "unity-yaml-rust",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'dump_yaml'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=dump_yaml",
+                    "--package=unity-yaml-rust"
+                ],
+                "filter": {
+                    "name": "dump_yaml",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'dump_yaml'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=dump_yaml",
+                    "--package=unity-yaml-rust"
+                ],
+                "filter": {
+                    "name": "dump_yaml",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'unity_file_test'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=unity_file_test",
+                    "--package=unity-yaml-rust"
+                ],
+                "filter": {
+                    "name": "unity_file_test",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'unity_file_test'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=unity_file_test",
+                    "--package=unity-yaml-rust"
+                ],
+                "filter": {
+                    "name": "unity_file_test",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'emited_qouted_bools'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=emited_qouted_bools",
+                    "--package=unity-yaml-rust"
+                ],
+                "filter": {
+                    "name": "emited_qouted_bools",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'emited_qouted_bools'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=emited_qouted_bools",
+                    "--package=unity-yaml-rust"
+                ],
+                "filter": {
+                    "name": "emited_qouted_bools",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'test_round_trip'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=test_round_trip",
+                    "--package=unity-yaml-rust"
+                ],
+                "filter": {
+                    "name": "test_round_trip",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'spec_test'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=spec_test",
+                    "--package=unity-yaml-rust"
+                ],
+                "filter": {
+                    "name": "spec_test",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'quickcheck'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=quickcheck",
+                    "--package=unity-yaml-rust"
+                ],
+                "filter": {
+                    "name": "quickcheck",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'test_unity_yaml'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=test_unity_yaml",
+                    "--package=unity-yaml-rust"
+                ],
+                "filter": {
+                    "name": "test_unity_yaml",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

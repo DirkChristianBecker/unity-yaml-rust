@@ -1,25 +1,24 @@
-
- // https://stackoverflow.com/questions/28028854/how-do-i-match-enum-values-with-an-integer
-macro_rules! back_to_enum 
+// https://stackoverflow.com/questions/28028854/how-do-i-match-enum-values-with-an-integer
+macro_rules! back_to_enum
 {
-    ($(#[$meta:meta])* $vis:vis enum $name:ident 
+    ($(#[$meta:meta])* $vis:vis enum $name:ident
     {
         $($(#[$vmeta:meta])* $vname:ident $(= $val:expr)?,)*
-    }) => 
+    }) =>
     {
         $(#[$meta])*
-        $vis enum $name 
+        $vis enum $name
         {
             $($(#[$vmeta])* $vname $(= $val)?,)*
         }
 
-        impl std::convert::TryFrom<u64> for $name 
+        impl std::convert::TryFrom<u64> for $name
         {
             type Error = ();
 
-            fn try_from(v: u64) -> Result<Self, Self::Error> 
+            fn try_from(v: u64) -> Result<Self, Self::Error>
             {
-                match v 
+                match v
                 {
                     $(x if x == $name::$vname as u64 => Ok($name::$vname),)*
                     _ => Err(()),
@@ -28,10 +27,9 @@ macro_rules! back_to_enum
         }
     }
 }
-    
-back_to_enum!
-{
-    #[derive(Clone, Copy, Debug)]
+
+back_to_enum! {
+    #[derive(Clone, Copy, Debug, PartialEq)]
     pub enum AssetType
     {
         Object = 0,
