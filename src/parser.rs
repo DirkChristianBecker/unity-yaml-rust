@@ -69,7 +69,7 @@ pub struct Parser<T> {
     scanner: Scanner<T>,
     states: Vec<State>,
     state: State,
-    marks: Vec<Marker>,
+    // marks: Vec<Marker>,
     token: Option<Token>,
     current: Option<(Event, Marker)>,
     anchors: HashMap<String, usize>,
@@ -98,7 +98,7 @@ impl<T: Iterator<Item = char>> Parser<T> {
             scanner: Scanner::new(src),
             states: Vec::new(),
             state: State::StreamStart,
-            marks: Vec::new(),
+            // marks: Vec::new(),
             token: None,
             current: None,
 

@@ -54,10 +54,10 @@ pub enum Yaml {
 
     /// Original content.
     Original(string::String),
+    DocumentMeta(u64, u64)
 }
 
 pub type Array = Vec<Yaml>;
-// pub type Hash = LinkedHashMap<Yaml, Yaml>;
 
 #[derive(Clone, PartialEq, PartialOrd, Debug, Eq, Ord, Hash)]
 pub struct Hash {
@@ -97,7 +97,6 @@ impl Hash {
     pub fn iter(&self) -> linked_hash_map::Iter<Yaml, Yaml> {
         self.map.iter()
     }
-
 }
 
 
@@ -124,19 +123,30 @@ pub struct YamlLoader {
 
 impl MarkedEventReceiver for YamlLoader {
     fn on_event(&mut self, ev: Event, _: Marker) {
-        // println!("EV {:?}", ev);
         match ev {
             Event::Line(content) => {
                 self.docs.push(Yaml::Original(content))
             }
             Event::DocumentStart(cid, oid) => {
                 // do nothing
-                if cid > 0 && oid > 0 {
-                    self.docs.push(Yaml::Original(format!("--- !u!{} &{}", cid, oid)))
+                if cid > 0 && oid > 0 
+                {
+                    self.docs.push(Yaml::DocumentMeta(cid, oid))
+                }
+
+                if cid > 0 && oid == 0
+                {
+                    println!("Found cid: {}", cid);
+                }
+
+                if cid == 0 && oid > 0
+                {
+                    println!("Found oid: {}", oid);
                 }
             }
             Event::DocumentEnd => {
-                match self.doc_stack.len() {
+                match self.doc_stack.len() 
+                {
                     // empty document
                     0 => self.docs.push(Yaml::BadValue),
                     1 => self.docs.push(self.doc_stack.pop().unwrap().0),
@@ -206,7 +216,6 @@ impl MarkedEventReceiver for YamlLoader {
             }
             _ => { /* ignore */ }
         }
-        // println!("DOC {:?}", self.doc_stack);
     }
 }
 
@@ -253,8 +262,7 @@ impl YamlLoader {
 
     pub fn load_from_path(abs_path : &std::path::PathBuf) -> Result<Vec<Yaml>, ScanError> 
     {
-        let mut content = fs::read_to_string(abs_path).unwrap();
-
+        let content = fs::read_to_string(abs_path).unwrap();
         Self::load_from_str(&content)
     }
 }
@@ -499,20 +507,6 @@ impl IndexMut<usize> for Yaml {
                 })
             },
         }
-        // if let Some(v) = self.as_mut_vec() {
-        //     v.get_mut(idx).unwrap_or(unsafe {
-        //         &mut MUT_BAD_VALUE   
-        //     })
-        // } else if let Some(v) = self.as_mut_hash() {
-        //     let key = Yaml::Integer(idx as i64);
-        //     v.get_mut(&key).unwrap_or(unsafe {
-        //         &mut MUT_BAD_VALUE
-        //     })
-        // } else {
-        //     unsafe {
-        //         &mut MUT_BAD_VALUE
-        //     }
-        // }
     }
 }
 

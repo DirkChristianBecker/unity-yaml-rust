@@ -45,12 +45,18 @@ pub mod emitter;
 pub mod parser;
 pub mod scanner;
 pub mod yaml;
+pub mod tools;
+pub mod unity_document;
+pub mod asset_types;
 
 // reexport key APIs
 pub use crate::emitter::{EmitError, YamlEmitter};
 pub use crate::parser::Event;
 pub use crate::scanner::ScanError;
 pub use crate::yaml::{Yaml, YamlLoader};
+pub use crate::tools::dump_node;
+pub use crate::unity_document::UnityDocument;
+pub use crate::asset_types::AssetType;
 
 #[cfg(test)]
 mod tests {

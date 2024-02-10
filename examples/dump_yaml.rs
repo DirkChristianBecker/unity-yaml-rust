@@ -1,34 +1,8 @@
-
 use unity_yaml_rust::{yaml, YamlEmitter, Yaml};
+use unity_yaml_rust::tools::dump_node;
 
-fn print_indent(indent: usize) {
-    for _ in 0..indent {
-        print!("    ");
-    }
-}
-
-fn dump_node(doc: &yaml::Yaml, indent: usize) {
-    match *doc {
-        yaml::Yaml::Array(ref v) => {
-            for x in v {
-                dump_node(x, indent + 1);
-            }
-        }
-        yaml::Yaml::Hash(ref h) => {
-            for (k, v) in &h.map {
-                print_indent(indent);
-                println!("{:?}:", k);
-                dump_node(v, indent + 1);
-            }
-        }
-        _ => {
-            print_indent(indent);
-            println!("{:?}", doc);
-        }
-    }
-}
-
-fn main() {
+fn main() 
+{
     let s = r#"
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
@@ -79,13 +53,31 @@ SpriteAtlas:
 
     let mut docs = yaml::YamlLoader::load_from_str(s).unwrap();
     // Multi document support, doc is a yaml::Yaml
-    for doc in docs.iter_mut() {
+    let mut i = 0;
+    for doc in docs.iter_mut() 
+    {
+        i += 1;
+
         // Debug support
-        println!("{:?}", doc);
+        // println!("{:?}", doc);
 
         dump_node(doc, 0);
 
-        if !matches!(doc, Yaml::Original(_)) {
+        match doc 
+        {
+            Yaml::DocumentMeta(doc_type, doc_id) => 
+            {
+                assert_eq!(doc_id.to_owned(), 4343727234628468602 as u64);
+                assert_eq!(doc_type.to_owned(), 687078895 as u64);
+            }
+            _=>
+            {
+
+            }
+        }
+
+        if !matches!(doc, Yaml::Original(_)) && !matches!(doc, Yaml::DocumentMeta(_, _)) 
+        {
             //IndexMut
             let sprite_atlas = &mut doc["SpriteAtlas"];
             
@@ -109,12 +101,11 @@ SpriteAtlas:
         }
 
         // Dump the YAML object
-        let mut out_str = String::new();
-        {
-            let mut emitter = YamlEmitter::new(&mut out_str);
-            emitter.dump(doc).unwrap(); // dump the YAML object to a String
-        }
-        println!("{}", out_str);
+        // let mut out_str = String::new();
+        // {
+        //     let mut emitter = YamlEmitter::new(&mut out_str);
+        //     emitter.dump(doc).unwrap(); // dump the YAML object to a String
+        // }
+        // println!("{}. Document: \n{}", i, out_str);
     }
-
 }
