@@ -114,4 +114,21 @@ impl UnityDocument {
 
         return "";
     }
+
+    /// Get an array from this document. The path is a sequence of elements
+    /// separated by '/' the gives the order of elements to access.
+    pub fn get_array(&self, path: &str) -> &Vec<Yaml> {
+        if let Some(n) = self.get_node(path) {
+            if let Some(i) = n.as_vec() {
+                return i;
+            }
+
+            eprintln!(
+                "Could not convert '{}' to f64 from document {}.",
+                path, self.document_id
+            );
+        }
+
+        panic!("Could not find array in this document {}", path);
+    }
 }

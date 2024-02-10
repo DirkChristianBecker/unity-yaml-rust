@@ -1,6 +1,5 @@
 use unity_yaml_rust::AssetFile;
 use unity_yaml_rust::AssetType;
-use unity_yaml_rust::dump_node;
 
 #[test]
 fn test_unity_yaml() {
@@ -62,6 +61,12 @@ SpriteAtlas:
 
     assert_eq!(doc1.get_i64("SpriteAtlas/m_EditorData/serializedVersion"), 2);
 
-    let array = doc1.get_node("SpriteAtlas/m_PackedSprites").expect("Should always exist").as_vec().expect("Should be an array.");
-    dump_node(&array[0], 0);
+    let array = doc1.get_array("SpriteAtlas/m_PackedSprites");
+    assert_eq!(array[0]["fileID"].as_i64().expect("This is a test"), 21300000);
+    assert_eq!(array[1]["fileID"].as_i64().expect("This is a test"), 21300000);
+    assert_eq!(array[2]["fileID"].as_i64().expect("This is a test"), 21300000);
+
+    assert_eq!(array[0]["guid"].as_str().expect("This is a test"), "3083aff0bd42a4268a9cfe6e564ab247");
+    assert_eq!(array[1]["guid"].as_str().expect("This is a test"), "054656e6c52c2425eb7c5ec764d03587");
+    assert_eq!(array[2]["guid"].as_str().expect("This is a test"), "55aba929877c26747acf9ad10ee7989c");
 }

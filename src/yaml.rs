@@ -127,7 +127,6 @@ impl MarkedEventReceiver for YamlLoader {
         match ev {
             Event::Line(content) => self.docs.push(Yaml::Original(content)),
             Event::DocumentStart(cid, oid) => {
-                // do nothing
                 if cid > 0 && oid > 0 {
                     self.docs.push(Yaml::DocumentMeta(cid, oid))
                 }
