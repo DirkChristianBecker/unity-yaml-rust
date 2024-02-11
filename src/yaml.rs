@@ -111,9 +111,9 @@ impl fmt::Display for Yaml {
             },
             Yaml::Alias(_) => { write!(f, "Alias") }
             Yaml::Null => { write!(f, "Null")},
-            Yaml::BadValue => { write!(f, "Bad Value\n")},
-            Yaml::Original(s) => { write!(f, "{}\n", s)},
-            Yaml::DocumentMeta(t, id) => { write!(f, "Document: {} -> {}\n", t, id)},
+            Yaml::BadValue => { writeln!(f, "Bad Value")},
+            Yaml::Original(s) => { writeln!(f, "{}", s)},
+            Yaml::DocumentMeta(t, id) => { writeln!(f, "Document: {} -> {}", t, id)},
         }
     }
 }
