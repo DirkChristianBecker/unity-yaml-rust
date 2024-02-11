@@ -2,6 +2,7 @@ use crate::UnityDocument;
 use crate::Yaml;
 use crate::YamlLoader;
 use std::collections::HashMap;
+use std::fs;
 
 pub struct AssetFile {
     documents: HashMap<u64, UnityDocument>,
@@ -20,7 +21,7 @@ impl AssetFile {
         self.documents.insert(doc.get_id(), doc);
     }
 
-    /// Create an asset file from
+    /// Create an asset file from string
     pub fn from_str(content: &str) -> Self {
         let docs = YamlLoader::load_from_str(content).unwrap();
         let mut r = AssetFile::new();
@@ -47,6 +48,11 @@ impl AssetFile {
         }
 
         r
+    }
+
+    pub fn load_from_path(abs_path: &std::path::PathBuf) -> Self{
+        let content = fs::read_to_string(abs_path).unwrap();
+        Self::from_str(&content)
     }
 
     pub fn print(&self) {
