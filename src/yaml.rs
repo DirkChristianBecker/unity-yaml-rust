@@ -9,6 +9,7 @@ use std::mem;
 use std::ops::{Index, IndexMut};
 use std::string;
 use std::vec;
+use std::fmt;
 
 /// A YAML node is stored as this `Yaml` enumeration, which provides an easy way to
 /// access your YAML document.
@@ -55,6 +56,66 @@ pub enum Yaml {
     /// Original content.
     Original(string::String),
     DocumentMeta(u64, u64),
+}
+
+
+impl fmt::Display for Yaml {
+    // This trait requires `fmt` with this exact signature.
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Yaml::Real(r) => write!(f, "{}", r),
+            Yaml::Integer(i) => write!(f, "{}", i),
+            Yaml::String(s) => write!(f, "{}", s),
+            Yaml::Boolean(b) => write!(f, "{}", b),
+            Yaml::Array(ref a) => {
+                for e in a.iter() {
+                    match e.fmt(f) {
+                        Ok(_) => {
+                            match writeln!(f) {
+                                Ok(_) => {},
+                                Err(e) => return Err(e),
+                            }
+
+                            continue
+                        },
+                        Err(e) => return Err(e),
+                    }
+                }
+
+                Ok(())
+            },
+            Yaml::Hash(ref h) => {
+                for (k, v) in h.iter() {
+                    match k.fmt(f) {
+                        Ok(_) => {},
+                        Err(e) => return Err(e),
+                    }
+
+                    match write!(f, " -> ") {
+                        Ok(_) => {},
+                        Err(e) => return Err(e),
+                    }
+
+                    match v.fmt(f) {
+                        Ok(_) => {},
+                        Err(e) => return Err(e),                        
+                    }
+
+                    match writeln!(f) {
+                        Ok(_) => {},
+                        Err(e) => return Err(e),
+                    }
+                }
+
+                Ok(())
+            },
+            Yaml::Alias(_) => { write!(f, "Alias") }
+            Yaml::Null => { write!(f, "Null")},
+            Yaml::BadValue => { write!(f, "Bad Value\n")},
+            Yaml::Original(s) => { write!(f, "{}\n", s)},
+            Yaml::DocumentMeta(t, id) => { write!(f, "Document: {} -> {}\n", t, id)},
+        }
+    }
 }
 
 pub type Array = Vec<Yaml>;
