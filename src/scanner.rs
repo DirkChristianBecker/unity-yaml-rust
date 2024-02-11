@@ -194,7 +194,8 @@ fn is_blankz(c: char) -> bool {
 }
 #[inline]
 fn is_digit(c: char) -> bool {
-    ('0'..='9').contains(&c)
+    // ('0'..='9').contains(&c)
+    c.is_ascii_digit()
 }
 #[inline]
 fn is_alpha(c: char) -> bool {
@@ -202,7 +203,8 @@ fn is_alpha(c: char) -> bool {
 }
 #[inline]
 fn is_hex(c: char) -> bool {
-    ('0'..='9').contains(&c) || ('a'..='f').contains(&c) || ('A'..='F').contains(&c)
+    // ('0'..='9').contains(&c) || ('a'..='f').contains(&c) || ('A'..='F').contains(&c)
+    c.is_ascii_digit() || ('a'..='f').contains(&c) || ('A'..='F').contains(&c)
 }
 #[inline]
 fn as_hex(c: char) -> u32 {
