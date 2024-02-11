@@ -686,7 +686,7 @@ impl<T: Iterator<Item = char>> Scanner<T> {
         }
 
         let is_secondary = handle == "!!";
-        let prefix = self.scan_tag_uri(true, is_secondary, &String::new(), mark)?;
+        let prefix = self.scan_tag_uri(true, is_secondary, "", mark)?;
 
         self.lookahead(1);
 
@@ -722,7 +722,7 @@ impl<T: Iterator<Item = char>> Scanner<T> {
             // Eat '!<'
             self.skip();
             self.skip();
-            suffix = self.scan_tag_uri(false, false, &String::new(), &start_mark)?;
+            suffix = self.scan_tag_uri(false, false, "", &start_mark)?;
 
             if self.ch() != '>' {
                 return Err(ScanError::new(
@@ -740,7 +740,7 @@ impl<T: Iterator<Item = char>> Scanner<T> {
                 if handle == "!!" {
                     secondary = true;
                 }
-                suffix = self.scan_tag_uri(false, secondary, &String::new(), &start_mark)?;
+                suffix = self.scan_tag_uri(false, secondary, "", &start_mark)?;
             } else {
                 suffix = self.scan_tag_uri(false, false, &handle, &start_mark)?;
                 handle = "!".to_owned();

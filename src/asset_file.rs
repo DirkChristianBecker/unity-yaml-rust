@@ -36,12 +36,9 @@ impl AssetFile {
                 // element than we habe the beginning of a new document.
                 Yaml::Hash(_) => {
                     if i > 0 {
-                        match docs[i - 1] {
-                            Yaml::DocumentMeta(t, id) => {
-                                let d = UnityDocument::new(id, t, node.to_owned());
-                                r.add_document(d);
-                            }
-                            _ => {}
+                        if let Yaml::DocumentMeta(t, id) = docs[i - 1] {
+                            let d = UnityDocument::new(id, t, node.to_owned());
+                            r.add_document(d);
                         }
                     }
                 }

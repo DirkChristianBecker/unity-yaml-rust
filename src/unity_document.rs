@@ -13,16 +13,16 @@ impl UnityDocument {
         let asset_type = AssetType::try_from(t).expect("Could not convert u64 to an asset type.");
         UnityDocument {
             document_id: id,
-            asset_type: asset_type,
-            node: node,
+            asset_type,
+            node,
         }
     }
 
     pub fn get_id(&self) -> u64 {
-        return self.document_id;
+        self.document_id
     }
     pub fn get_asset_type(&self) -> AssetType {
-        return self.asset_type;
+        self.asset_type
     }
 
     pub fn print(&self, dump: bool) {
@@ -55,7 +55,7 @@ impl UnityDocument {
             return None;
         }
 
-        return result;
+        result
     }
 
     /// Read a value from this document. The path is a sequence of elements
@@ -74,7 +74,7 @@ impl UnityDocument {
             return -1;
         }
 
-        return -1;
+        -1
     }
 
     /// Read a value from this document. The path is a sequence of elements
@@ -93,7 +93,7 @@ impl UnityDocument {
             return -1.0;
         }
 
-        return -1.0;
+        -1.0
     }
 
     /// Read a value from this document. The path is a sequence of elements
@@ -112,7 +112,7 @@ impl UnityDocument {
             return "";
         }
 
-        return "";
+        ""
     }
 
     /// Get an array from this document. The path is a sequence of elements
