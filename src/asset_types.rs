@@ -367,23 +367,21 @@ impl std::fmt::Display for AssetType {
 }
 
 pub mod tests {
-    use super::*;
-
     #[test]
     pub fn test_int_to_enum() {
         let mut test: u64 = 1;
-        let mut value = AssetType::try_from(test).unwrap();
-        assert_eq!(value, AssetType::GameObject);
+        let mut value = super::AssetType::try_from(test).unwrap();
+        assert_eq!(value, super::AssetType::GameObject);
 
         test = 2089858483;
-        value = AssetType::try_from(test).unwrap();
-        assert_eq!(value, AssetType::ScriptedImporter);
+        value = super::AssetType::try_from(test).unwrap();
+        assert_eq!(value, super::AssetType::ScriptedImporter);
     }
 
     #[test]
     pub fn test_enum_to_string() {
-        assert_eq!("Camera",            AssetType::Camera.to_string());
-        assert_eq!("AnimationClip",     AssetType::AnimationClip.to_string());
-        assert_eq!("AssetDatabaseV1",   AssetType::AssetDatabaseV1.to_string());
+        assert_eq!("Camera",            super::AssetType::Camera.to_string());
+        assert_eq!("AnimationClip",     super::AssetType::AnimationClip.to_string());
+        assert_eq!("AssetDatabaseV1",   super::AssetType::AssetDatabaseV1.to_string());
     }
 }
