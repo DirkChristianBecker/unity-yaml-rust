@@ -1,6 +1,6 @@
 use unity_yaml_rust::tools::dump_node;
-use unity_yaml_rust::{yaml, Yaml};
 use unity_yaml_rust::YamlEmitter;
+use unity_yaml_rust::{yaml, Yaml};
 
 fn main() {
     let s = r#"
@@ -54,7 +54,6 @@ SpriteAtlas:
     let mut docs = yaml::YamlLoader::load_from_str(s).unwrap();
     // Multi document support, doc is a yaml::Yaml
     for doc in docs.iter_mut() {
-
         // Debug support
         // println!("{:?}", doc);
 
@@ -97,7 +96,7 @@ SpriteAtlas:
             let mut emitter = YamlEmitter::new(&mut out_str);
             emitter.dump(doc).unwrap(); // dump the YAML object to a String
         }
-        
+
         //println!("{}. Document: \n{}", i, out_str);
     }
 }

@@ -478,61 +478,61 @@ z: string with spaces"#;
     }
 
     // #[test]
-//     fn emit_quoted_bools() {
-//         let input = r#"
-// string0: yes
-// string1: no
-// string2: "true"
-// string3: "false"
-// string4: "~"
-// [true, false]: real_bools
-// [True, TRUE, False, FALSE, y,Y,Yes,YES,n,N,No,NO,on,On,ON,off,Off,OFF]: false_bools
-// bool0: true
-// bool1: false"#;
-//         let expected = r#"string0: true
-// string1: false
-// string2: "true"
-// string3: "false"
-// string4: "~"
-// ? - true
-//     - false
-// : real_bools
-// ? - "True"
-//     - "TRUE"
-//     - "False"
-//     - "FALSE"
-//     - y
-//     - Y
-//     - "Yes"
-//     - "YES"
-//     - n
-//     - N
-//     - "No"
-//     - "NO"
-//     - "on"
-//     - "On"
-//     - "ON"
-//     - "off"
-//     - "Off"
-//     - "OFF"
-// : false_bools
-// bool0: true
-// bool1: false"#;
+    //     fn emit_quoted_bools() {
+    //         let input = r#"
+    // string0: yes
+    // string1: no
+    // string2: "true"
+    // string3: "false"
+    // string4: "~"
+    // [true, false]: real_bools
+    // [True, TRUE, False, FALSE, y,Y,Yes,YES,n,N,No,NO,on,On,ON,off,Off,OFF]: false_bools
+    // bool0: true
+    // bool1: false"#;
+    //         let expected = r#"string0: true
+    // string1: false
+    // string2: "true"
+    // string3: "false"
+    // string4: "~"
+    // ? - true
+    //     - false
+    // : real_bools
+    // ? - "True"
+    //     - "TRUE"
+    //     - "False"
+    //     - "FALSE"
+    //     - y
+    //     - Y
+    //     - "Yes"
+    //     - "YES"
+    //     - n
+    //     - N
+    //     - "No"
+    //     - "NO"
+    //     - "on"
+    //     - "On"
+    //     - "ON"
+    //     - "off"
+    //     - "Off"
+    //     - "OFF"
+    // : false_bools
+    // bool0: true
+    // bool1: false"#;
 
-//         let docs = YamlLoader::load_from_str(input).unwrap();
-//         let doc = &docs[0];
-//         let mut writer = String::new();
-//         {
-//             let mut emitter = YamlEmitter::new(&mut writer);
-//             emitter.dump(doc).unwrap();
-//         }
+    //         let docs = YamlLoader::load_from_str(input).unwrap();
+    //         let doc = &docs[0];
+    //         let mut writer = String::new();
+    //         {
+    //             let mut emitter = YamlEmitter::new(&mut writer);
+    //             emitter.dump(doc).unwrap();
+    //         }
 
-//         assert_eq!(
-//             expected, writer,
-//             "expected:\n{}\nactual:\n{}\n",
-//             expected, writer
-//         );
-//     }
+    //         assert_eq!(
+    //             expected, writer,
+    //             "expected:\n{}\nactual:\n{}\n",
+    //             expected, writer
+    //         );
+    //     }
 
     #[test]
     fn test_empty_and_nested() {

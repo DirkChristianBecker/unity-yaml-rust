@@ -359,3 +359,31 @@ back_to_enum! {
         ScriptedImporter = 2089858483,
     }
 }
+
+impl std::fmt::Display for AssetType {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
+pub mod tests {
+    use super::*;
+
+    #[test]
+    pub fn test_int_to_enum() {
+        let mut test: u64 = 1;
+        let mut value = AssetType::try_from(test).unwrap();
+        assert_eq!(value, AssetType::GameObject);
+
+        test = 2089858483;
+        value = AssetType::try_from(test).unwrap();
+        assert_eq!(value, AssetType::ScriptedImporter);
+    }
+
+    #[test]
+    pub fn test_enum_to_string() {
+        assert_eq!("Camera",            AssetType::Camera.to_string());
+        assert_eq!("AnimationClip",     AssetType::AnimationClip.to_string());
+        assert_eq!("AssetDatabaseV1",   AssetType::AssetDatabaseV1.to_string());
+    }
+}

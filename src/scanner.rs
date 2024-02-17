@@ -1849,40 +1849,40 @@ mod test {
         end!(p);
     }
 
-//     #[test]
-//     fn test_explicit_scalar() {
-//         let s = "---
-// 'a scalar'
-// ...
-// ";
-//         let mut p = Scanner::new(s.chars());
-//         next!(p, StreamStart(..));
-//         next!(p, DocumentStart(..));
-//         next!(p, Scalar(TScalarStyle::SingleQuoted, _));
-//         next!(p, DocumentEnd);
-//         next!(p, StreamEnd);
-//         end!(p);
-//     }
+    //     #[test]
+    //     fn test_explicit_scalar() {
+    //         let s = "---
+    // 'a scalar'
+    // ...
+    // ";
+    //         let mut p = Scanner::new(s.chars());
+    //         next!(p, StreamStart(..));
+    //         next!(p, DocumentStart(..));
+    //         next!(p, Scalar(TScalarStyle::SingleQuoted, _));
+    //         next!(p, DocumentEnd);
+    //         next!(p, StreamEnd);
+    //         end!(p);
+    //     }
 
-//     #[test]
-//     fn test_multiple_documents() {
-//         let s = "
-// 'a scalar'
-// ---
-// 'a scalar'
-// ---
-// 'a scalar'
-// ";
-//         let mut p = Scanner::new(s.chars());
-//         next!(p, StreamStart(..));
-//         next!(p, Scalar(TScalarStyle::SingleQuoted, _));
-//         next!(p, DocumentStart(..));
-//         next!(p, Scalar(TScalarStyle::SingleQuoted, _));
-//         next!(p, DocumentStart(..));
-//         next!(p, Scalar(TScalarStyle::SingleQuoted, _));
-//         next!(p, StreamEnd);
-//         end!(p);
-//     }
+    //     #[test]
+    //     fn test_multiple_documents() {
+    //         let s = "
+    // 'a scalar'
+    // ---
+    // 'a scalar'
+    // ---
+    // 'a scalar'
+    // ";
+    //         let mut p = Scanner::new(s.chars());
+    //         next!(p, StreamStart(..));
+    //         next!(p, Scalar(TScalarStyle::SingleQuoted, _));
+    //         next!(p, DocumentStart(..));
+    //         next!(p, Scalar(TScalarStyle::SingleQuoted, _));
+    //         next!(p, DocumentStart(..));
+    //         next!(p, Scalar(TScalarStyle::SingleQuoted, _));
+    //         next!(p, StreamEnd);
+    //         end!(p);
+    //     }
 
     #[test]
     fn test_a_flow_sequence() {

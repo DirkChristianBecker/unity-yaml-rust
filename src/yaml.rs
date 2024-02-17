@@ -3,13 +3,13 @@ use crate::scanner::{Marker, ScanError, TScalarStyle, TokenType};
 use linked_hash_map::LinkedHashMap;
 use std::collections::BTreeMap;
 use std::f64;
+use std::fmt;
 use std::fs::{self};
 use std::i64;
 use std::mem;
 use std::ops::{Index, IndexMut};
 use std::string;
 use std::vec;
-use std::fmt;
 
 /// A YAML node is stored as this `Yaml` enumeration, which provides an easy way to
 /// access your YAML document.
@@ -58,7 +58,6 @@ pub enum Yaml {
     DocumentMeta(u64, u64),
 }
 
-
 impl fmt::Display for Yaml {
     // This trait requires `fmt` with this exact signature.
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -72,48 +71,58 @@ impl fmt::Display for Yaml {
                     match e.fmt(f) {
                         Ok(_) => {
                             match writeln!(f) {
-                                Ok(_) => {},
+                                Ok(_) => {}
                                 Err(e) => return Err(e),
                             }
 
-                            continue
-                        },
+                            continue;
+                        }
                         Err(e) => return Err(e),
                     }
                 }
 
                 Ok(())
-            },
+            }
             Yaml::Hash(ref h) => {
                 for (k, v) in h.iter() {
                     match k.fmt(f) {
-                        Ok(_) => {},
+                        Ok(_) => {}
                         Err(e) => return Err(e),
                     }
 
                     match write!(f, " -> ") {
-                        Ok(_) => {},
+                        Ok(_) => {}
                         Err(e) => return Err(e),
                     }
 
                     match v.fmt(f) {
-                        Ok(_) => {},
-                        Err(e) => return Err(e),                        
+                        Ok(_) => {}
+                        Err(e) => return Err(e),
                     }
 
                     match writeln!(f) {
-                        Ok(_) => {},
+                        Ok(_) => {}
                         Err(e) => return Err(e),
                     }
                 }
 
                 Ok(())
-            },
-            Yaml::Alias(_) => { write!(f, "Alias") }
-            Yaml::Null => { write!(f, "Null")},
-            Yaml::BadValue => { writeln!(f, "Bad Value")},
-            Yaml::Original(s) => { writeln!(f, "{}", s)},
-            Yaml::DocumentMeta(t, id) => { writeln!(f, "Document: {} -> {}", t, id)},
+            }
+            Yaml::Alias(_) => {
+                write!(f, "Alias")
+            }
+            Yaml::Null => {
+                write!(f, "Null")
+            }
+            Yaml::BadValue => {
+                writeln!(f, "Bad Value")
+            }
+            Yaml::Original(s) => {
+                writeln!(f, "{}", s)
+            }
+            Yaml::DocumentMeta(t, id) => {
+                writeln!(f, "Document: {} -> {}", t, id)
+            }
         }
     }
 }
@@ -633,18 +642,18 @@ a7: 你好
         assert_eq!(doc["a7"].as_str().unwrap(), "你好");
     }
 
-//     #[test]
-//     fn test_multi_doc() {
-//         let s = "
-// 'a scalar'
-// ---
-// 'a scalar'
-// ---
-// 'a scalar'
-// ";
-//         let out = YamlLoader::load_from_str(s).unwrap();
-//         assert_eq!(out.len(), 3);
-//     }
+    //     #[test]
+    //     fn test_multi_doc() {
+    //         let s = "
+    // 'a scalar'
+    // ---
+    // 'a scalar'
+    // ---
+    // 'a scalar'
+    // ";
+    //         let out = YamlLoader::load_from_str(s).unwrap();
+    //         assert_eq!(out.len(), 3);
+    //     }
 
     #[test]
     fn test_anchor() {

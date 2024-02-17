@@ -37,7 +37,7 @@ GameObject:
     let f = AssetFile::from_str(s);
 
     // Access a file via file id.
-    // The file id can be found after the &-Symbol in the document start tag: 
+    // The file id can be found after the &-Symbol in the document start tag:
     // --- !u!1001 &100100000
     let doc1 = f.get_document(100100000);
 

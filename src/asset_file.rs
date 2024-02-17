@@ -50,7 +50,7 @@ impl AssetFile {
         r
     }
 
-    pub fn load_from_path(abs_path: &std::path::PathBuf) -> Self{
+    pub fn load_from_path(abs_path: &std::path::PathBuf) -> Self {
         let content = fs::read_to_string(abs_path).unwrap();
         Self::from_str(&content)
     }

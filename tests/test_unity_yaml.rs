@@ -59,14 +59,35 @@ SpriteAtlas:
     assert_eq!(doc1.get_i64("SpriteAtlas/m_ObjectHideFlags"), 0);
     assert_eq!(doc1.get_string("SpriteAtlas/m_Name"), "atlas_launch");
 
-    assert_eq!(doc1.get_i64("SpriteAtlas/m_EditorData/serializedVersion"), 2);
+    assert_eq!(
+        doc1.get_i64("SpriteAtlas/m_EditorData/serializedVersion"),
+        2
+    );
 
     let array = doc1.get_array("SpriteAtlas/m_PackedSprites");
-    assert_eq!(array[0]["fileID"].as_i64().expect("This is a test"), 21300000);
-    assert_eq!(array[1]["fileID"].as_i64().expect("This is a test"), 21300000);
-    assert_eq!(array[2]["fileID"].as_i64().expect("This is a test"), 21300000);
+    assert_eq!(
+        array[0]["fileID"].as_i64().expect("This is a test"),
+        21300000
+    );
+    assert_eq!(
+        array[1]["fileID"].as_i64().expect("This is a test"),
+        21300000
+    );
+    assert_eq!(
+        array[2]["fileID"].as_i64().expect("This is a test"),
+        21300000
+    );
 
-    assert_eq!(array[0]["guid"].as_str().expect("This is a test"), "3083aff0bd42a4268a9cfe6e564ab247");
-    assert_eq!(array[1]["guid"].as_str().expect("This is a test"), "054656e6c52c2425eb7c5ec764d03587");
-    assert_eq!(array[2]["guid"].as_str().expect("This is a test"), "55aba929877c26747acf9ad10ee7989c");
+    assert_eq!(
+        array[0]["guid"].as_str().expect("This is a test"),
+        "3083aff0bd42a4268a9cfe6e564ab247"
+    );
+    assert_eq!(
+        array[1]["guid"].as_str().expect("This is a test"),
+        "054656e6c52c2425eb7c5ec764d03587"
+    );
+    assert_eq!(
+        array[2]["guid"].as_str().expect("This is a test"),
+        "55aba929877c26747acf9ad10ee7989c"
+    );
 }
