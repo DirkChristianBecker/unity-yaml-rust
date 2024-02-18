@@ -166,6 +166,18 @@ impl Hash {
         self.get(&y).is_some()
     }
 
+    /// Returns true, if this hashmap has all of the
+    /// given fields.
+    pub fn has_all(&self, fields : Vec<&str>) -> bool {
+        for f in fields {
+            if !self.has(f) {
+                return false;
+            }
+        }
+
+        true
+    }   
+
     pub fn remove(&mut self, k: &Yaml) -> Option<Yaml> {
         self.map.remove(k)
     }
@@ -1015,6 +1027,7 @@ subcommands3:
         
                 println!("{:#?}", doc);
                 assert!(doc.has("subcommands"));
+                assert!(doc.has_all(vec!["subcommands", "subcommands2", "subcommands3"]))
                 
     }
 }
