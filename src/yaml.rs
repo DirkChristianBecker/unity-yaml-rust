@@ -159,6 +159,13 @@ impl Hash {
         self.map.get_mut(k)
     }
 
+    /// Returns true, if this hashmap has a field
+    /// with the given name 
+    pub fn has(&self, field : &str) -> bool {
+        let y = Yaml::String(field.to_owned());
+        self.get(&y).is_some()
+    }
+
     pub fn remove(&mut self, k: &Yaml) -> Option<Yaml> {
         self.map.remove(k)
     }
@@ -986,5 +993,28 @@ subcommands3:
         assert_eq!(doc["DefaultImporter"]["userData"].as_str(), None);
         assert_eq!(doc["DefaultImporter"]["assetBundleName"].as_str(), None);
         assert_eq!(doc["DefaultImporter"]["assetBundleVariant"].as_str(), None);
+    }
+
+    #[test]
+    fn test_has() {
+        let s = r#"
+        subcommands:
+          - server:
+            about: server related commands
+        subcommands2:
+          - server:
+              about: server related commands
+        subcommands3:
+         - server:
+            about: server related commands
+                    "#;
+        
+                let out = YamlLoader::load_from_str(s).unwrap();
+                let binding = out.into_iter().next().unwrap();
+                let doc = &binding.as_hash().expect("Should be a hash");
+        
+                println!("{:#?}", doc);
+                assert!(doc.has("subcommands"));
+                
     }
 }

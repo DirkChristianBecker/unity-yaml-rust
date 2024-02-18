@@ -14,6 +14,7 @@ pub fn dump_node(doc: &Yaml, indent: usize) {
                 dump_node(x, indent + 1);
             }
         }
+
         Yaml::Hash(ref h) => {
             for (k, v) in &h.map {
                 // print!("Hash: ");
@@ -22,16 +23,20 @@ pub fn dump_node(doc: &Yaml, indent: usize) {
                 dump_node(v, indent + 1);
             }
         }
+
         Yaml::Alias(ref a) => {
             print_indent(indent);
             println!("{:?}", a);
         }
+
         Yaml::Original(ref o) => {
             println!("{:?}", o.as_str());
         }
+
         Yaml::DocumentMeta(t, id) => {
             println!("Meta: {} {}", t, id);
         }
+        
         _ => {
             print_indent(indent);
             println!("{:?}", doc);
