@@ -443,6 +443,7 @@ impl Yaml {
     pub fn as_f64(&self) -> Option<f64> {
         match *self {
             Yaml::Real(ref v) => parse_f64(v),
+            Yaml::Integer(v) => Some(v as f64),
             _ => None,
         }
     }
@@ -450,6 +451,7 @@ impl Yaml {
     pub fn into_f64(self) -> Option<f64> {
         match self {
             Yaml::Real(ref v) => parse_f64(v),
+            Yaml::Integer(v) => Some(v as f64),
             _ => None,
         }
     }
