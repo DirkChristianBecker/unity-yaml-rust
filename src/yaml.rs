@@ -143,6 +143,10 @@ impl Hash {
         }
     }
 
+    pub fn len(&self) -> usize {
+        self.map.len()
+    }
+
     pub fn into_iter(self) -> linked_hash_map::IntoIter<Yaml, Yaml> {
         self.map.into_iter()
     }
