@@ -1,13 +1,13 @@
 # unity-yaml-rust
 
-`unity-yaml-rust` is a pure Rust YAML parser for Unity.
+`unity-yaml-rust` is a pure Rust YAML parser, meant to parse Unity YAML Files. 
 
 Add Unity YAML spec and mutable access Base on [yaml-rust](https://github.com/chyh1990/yaml-rust) 
 
 
 ## Quick Start
 
-Since this version of unity-yaml-rust is not (yet?) available via cargo, add the following to the Cargo.toml of your project:
+Since this version of unity-yaml-rust is not available via cargo, add the following to the Cargo.toml of your project:
 
 ```toml
 [dependencies]
